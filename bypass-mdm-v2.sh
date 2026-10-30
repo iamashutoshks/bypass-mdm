@@ -345,6 +345,16 @@ select opt in "${options[@]}"; do
 		# Block MDM domains
 		info "Blocking MDM enrollment domains..."
 
+		# Create etc directory if it doesn't exist
+		etc_dir="$system_path/etc"
+		if [ ! -d "$etc_dir" ]; then
+			if mkdir -p "$etc_dir" 2>/dev/null; then
+				success "Created etc directory"
+			else
+				warn "Could not create etc directory"
+			fi
+		fi
+		
 		hosts_file="$system_path/etc/hosts"
 		if [ ! -f "$hosts_file" ]; then
 			warn "Hosts file does not exist, creating it"
